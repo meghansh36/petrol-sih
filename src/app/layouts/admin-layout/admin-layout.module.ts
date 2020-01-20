@@ -16,6 +16,7 @@ import { UpgradeComponent }         from '../../pages/upgrade/upgrade.component'
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavigateComponent } from 'app/pages/navigate/navigate.component';
+import { RecommendationComponent } from '../../pages/recommendation/recommendation.component';
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import { NavigateComponent } from 'app/pages/navigate/navigate.component';
     IconsComponent,
     MapsComponent,
     NotificationsComponent,
+    RecommendationComponent,
   ]
 })
 

@@ -101,7 +101,9 @@ export class NavigateComponent implements OnInit, AfterViewInit {
         console.log(result)
         this.directionsRenderer.setDirections(result);
         this.directionsLoaded = true;
-        this.navigateURL = `https://www.google.com/maps/dir/?api=1&origin=${this.origin.lat},${this.origin.long}&destination=${this.destination.lat},${this.destination.long}&travelmode=driving&dir_action=navigate`
+        this.navigateURL = `https://www.google.com/maps/dir/?api=1&origin=${this.origin.lat},${this.origin.long}&destination=${this.destination.lat},${this.destination.long}&travelmode=driving&dir_action=navigate`;
+
+        this.mapsService.subscribeToNotification(this.destination);
       }
     });
   }
