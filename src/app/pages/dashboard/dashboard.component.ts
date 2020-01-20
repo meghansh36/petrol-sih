@@ -28,12 +28,12 @@ export class DashboardComponent implements OnInit{
         data: {
           labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"],
           datasets: [{
-              borderColor: "#6bd098",
-              backgroundColor: "#6bd098",
+              borderColor: "#51cbce",
+              backgroundColor: "#51cbce",
               pointRadius: 0,
               pointHoverRadius: 0,
               borderWidth: 3,
-              data: [300, 310, 316, 322, 330, 326, 333, 345, 338, 354]
+              data: [2000, 2000, 2160, 2220, 2200, 2260, 2300, 2250, 2080, 1980]
             },
             {
               borderColor: "#f17e5d",
@@ -41,7 +41,7 @@ export class DashboardComponent implements OnInit{
               pointRadius: 0,
               pointHoverRadius: 0,
               borderWidth: 3,
-              data: [320, 340, 365, 360, 370, 385, 390, 384, 408, 420]
+              data: [3200, 3100, 3025, 3200, 2740, 3105, 2800, 2890, 3000, 3200]
             },
             {
               borderColor: "#fcc468",
@@ -49,7 +49,7 @@ export class DashboardComponent implements OnInit{
               pointRadius: 0,
               pointHoverRadius: 0,
               borderWidth: 3,
-              data: [370, 394, 415, 409, 425, 445, 460, 450, 478, 484]
+              data: [3920, 3940, 4150, 4000, 4205, 4105, 4100, 3500, 3700, 3840]
             }
           ]
         },
@@ -108,13 +108,12 @@ export class DashboardComponent implements OnInit{
             pointRadius: 0,
             pointHoverRadius: 0,
             backgroundColor: [
-              '#e3e3e3',
               '#4acccd',
               '#fcc468',
               '#ef8157'
             ],
             borderWidth: 0,
-            data: [342, 480, 530, 120]
+            data: [25, 15, 17]
           }]
         },
 
@@ -166,7 +165,7 @@ export class DashboardComponent implements OnInit{
       var speedCanvas = document.getElementById("speedChart");
 
       var dataFirst = {
-        data: [0, 19, 15, 20, 30, 40, 40, 50, 25, 30, 50, 70],
+        data: [62.98, 64.49, 66.99, 67.54, 66.11, 65.91, 66.33, 65.54, 67.54, 66.06, 65.85, 66.04],
         fill: false,
         borderColor: '#fbc658',
         backgroundColor: 'transparent',
@@ -177,7 +176,7 @@ export class DashboardComponent implements OnInit{
       };
 
       var dataSecond = {
-        data: [0, 5, 10, 12, 20, 27, 30, 34, 42, 45, 55, 63],
+        data: [69.97, 70.31, 72.39, 73.95, 71.98, 70.63, 73.72, 72.59, 73.43, 73.38, 74.93, 75.48],
         fill: false,
         borderColor: '#51CACF',
         backgroundColor: 'transparent',

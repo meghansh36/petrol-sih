@@ -68,9 +68,10 @@ export class MapsComponent implements OnInit {
         var service = new google.maps.places.PlacesService(map);
         var infowindow = new google.maps.InfoWindow();
 
-        service.textSearch(request, (results, status) => {
-            if (status == google.maps.places.PlacesServiceStatus.OK) {
-                for (var i = 0; i < results.length; i++) {
+        service.textSearch(request, (results, status, pagination) => {
+
+            if(status != google.maps.places.PlacesServiceStatus.OK) return; 
+            for (var i = 0; i < results.length; i++) {
                 var place = results[i];
 
                 var marker = new google.maps.Marker({
@@ -89,8 +90,11 @@ export class MapsComponent implements OnInit {
                     infowindow.setContent(content);
                     infowindow.open(map, this);
                 });
-                }
             }
+            if(pagination.hasNextPage) {
+                pagination.nextPage();
+            }
+        
         });
     }
 
