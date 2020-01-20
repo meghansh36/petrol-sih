@@ -61,7 +61,7 @@ export class NavigateComponent implements OnInit, AfterViewInit {
     }
     var map = new google.maps.Map(document.getElementById("map"), mapOptions);
     this.directionsRenderer.setMap(map);
-
+    
   }
 
 

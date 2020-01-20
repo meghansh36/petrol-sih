@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { SwPush } from '@angular/service-worker';
 import { HttpClient } from '@angular/common/http';
+import { Subject } from 'rxjs';
+import { take } from 'rxjs/operators'
 
+declare var google: any;
 @Injectable({
   providedIn: 'root'
 })
@@ -12,11 +15,15 @@ export class MapsService {
 
   readonly VAPID_PUBLIC_KEY = "BHSpRNHScI75d93g647Y4iJyVVlM_oroyj8oo3WJQUkD_B1Ahy177qCKtNrXVSmqN364A_d0tW81mspn2FA7TEY";
 
+  map: any;
+  standardRadius = 2000;
+  gasStationResultEmitter = new Subject();
+  suggestedEmitter = new Subject();
   subscribeToNotification(destinationObj) {
     this.swPush.requestSubscription({
       serverPublicKey: this.VAPID_PUBLIC_KEY
   })
-  .then(sub => {this.addPushSubscriber(sub).subscribe()})
+  .then(sub => {this.addPushSubscriber(sub, destinationObj).subscribe()})
   .catch(err => console.error("Could not subscribe to notifications", err));
 
   this.addsubscriber(destinationObj);
@@ -51,9 +58,9 @@ export class MapsService {
     this.swPush.notificationClicks.subscribe(e => {
       window.focus();
       if(window.location.hostname === "localhost")
-          window.open(`http://localhost:4200/#/recommendation/?destination=${JSON.stringify(destinationObj)}`, '_self')
+          window.open(`http://localhost:4200/#/recommendation/?destination=${JSON.stringify(destinationObj)}`, '_blank')
         else  
-      window.open(`/#/recommendation/?destination=${JSON.stringify(destinationObj)}`, '_self')
+      window.open(`/#/recommendation/?destination=${JSON.stringify(destinationObj)}`, '_blank')
     })
   }
 
@@ -68,8 +75,8 @@ export class MapsService {
     });
   }
 
-  addPushSubscriber(sub) {
-    return this.http.post("https://infinite-peak-35695.herokuapp.com/pushNotification", sub);
+  addPushSubscriber(sub, destination) {
+    return this.http.post("https://infinite-peak-35695.herokuapp.com/pushNotification", {sub, destination});
   }
 
 
@@ -109,7 +116,53 @@ export class MapsService {
     }
     
     stationList.sort(compare);
+
+    return stationList[0];
   }
+
+  async fetchStations(currentPostion) {
+    var myLatlng = new google.maps.LatLng(currentPostion.lat, currentPostion.long)
+
+        //Add Gas Stations to the map
+        var request =  {
+            radius: this.standardRadius,
+            type: 'gas_station',
+            location: myLatlng,
+            query: 'petrol pump'
+        };
+
+        var service = new google.maps.places.PlacesService(this.map);
+        var infowindow = new google.maps.InfoWindow();
+
+        service.textSearch(request, (results, status, pagination) => {
+
+            if(status != google.maps.places.PlacesServiceStatus.OK) return; 
+            let parsedResults = [];
+            results.forEach(element => {
+              parsedResults.push({
+                pump_id: element.place_id,
+                latitude: element.geometry.location.lat(),
+                longitude: element.geometry.location.lng(),
+                ratings: element.rating || 0,
+                waitTime: Math.ceil(Math.random()*20)
+              })
+            });
+            this.gasStationResultEmitter.next(parsedResults)
+          });
+        }
+        
+    async getRecommendation(currentPosition, destination) {
+      
+      this.fetchStations(currentPosition);
+      this.gasStationResultEmitter.pipe(take(1)).subscribe(result => {
+        let suggested = this.recommendation({"currLat":currentPosition.lat,"currLong":currentPosition.long,"statList": result})
+        
+        this.suggestedEmitter.next(suggested);
+    })
+    
+  }
+
+
 
   connect() {
     this.socket.connect();
