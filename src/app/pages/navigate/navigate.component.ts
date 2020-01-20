@@ -21,6 +21,7 @@ export class NavigateComponent implements OnInit, AfterViewInit {
   directionsRenderer;
   navigateURL: string;
   directionsLoaded = false;
+  locationClicked = false;
   constructor(private mapsService: MapsService) { }
 
   ngOnInit() {
@@ -103,6 +104,21 @@ export class NavigateComponent implements OnInit, AfterViewInit {
         this.navigateURL = `https://www.google.com/maps/dir/?api=1&origin=${this.origin.lat},${this.origin.long}&destination=${this.destination.lat},${this.destination.long}&travelmode=driving&dir_action=navigate`
       }
     });
+  }
+
+  setCurrentLocation() {
+    this.locationClicked = !this.locationClicked;
+    var origin_input = document.getElementById('origin-autocomplete');
+    if(this.locationClicked) {
+      origin_input['value'] = "Your Location"
+      origin_input['disabled'] = true;
+      this.origin = {...this.currentPosition};
+    } else {
+      origin_input['value'] = "";
+      origin_input['disabled'] = false;
+      
+    }
+
   }
 
 }
