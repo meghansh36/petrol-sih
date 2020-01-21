@@ -82,13 +82,13 @@ export class MapsService {
 
   recommendation(info) {
     function compare(a,b) {
-      if(a.waitTime == b.waitTime){
-        if(a.distance == b.distance){
+      if(a.distance == b.distance){
+        if(a.waitTime == b.waitTime){
           return b.rating - a.rating;
         }
-        else return a.distance - b.distance;
+        else return a.waitTime - b.waitTime;
       }
-      else return a.waitTime - b.waitTime;
+      else return a.distance - b.distance;
     }
     
     function getDistance(lat1, lat2, lng1, lng2) {
