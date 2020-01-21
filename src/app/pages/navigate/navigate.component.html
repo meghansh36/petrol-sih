@@ -4,7 +4,7 @@
         <div style="display: flex">
             <input type="text" id="origin-autocomplete" class="origin-field form-control" >
             <button style="border: 1px solid black;
-            border-radius: 5px;"><i class="nc-icon nc-globe"></i></button>
+            border-radius: 5px; outline: none" [ngClass]="{locationClicked: locationClicked}" (click)="setCurrentLocation()"><i class="nc-icon nc-globe"></i></button>
         </div>
     </div>
     <div class="col-lg-12" style="margin-top: 20px">

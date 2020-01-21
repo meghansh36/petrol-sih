@@ -19,7 +19,8 @@
             "assets": [
               "src/assets",
               "src/favicon.ico",
-              "src/manifest.webmanifest"
+              "src/manifest.webmanifest",
+              "src/ngsw-worker.js", "src/ngsw.json"
             ],
             "styles": [
               "node_modules/bootstrap/scss/bootstrap.scss",

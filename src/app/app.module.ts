@@ -14,8 +14,10 @@ import { AppRoutes } from './app.routing';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { HttpClientModule } from '@angular/common/http';
 
-
+const config: SocketIoConfig = { url: "https://infinite-peak-35695.herokuapp.com/", options: { autoConnect : false } };
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +33,9 @@ import { environment } from '../environments/environment';
     ToastrModule.forRoot(),
     FooterModule,
     FixedPluginModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    SocketIoModule.forRoot(config),
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
